@@ -15,6 +15,7 @@ export class Pacman {
     this.speed = speed;
     this.map = map;
     this.direction = DIRECTION.RIGHT;
+    this.nextDirection = this.direction;
     this.currentFrame = 1;
     this.frameCount = 7;
 
@@ -53,7 +54,19 @@ export class Pacman {
 
   checkGhostCollision() {}
 
-  changeDirectionIfPossible() {}
+  changeDirectionIfPossible() {
+    if (this.direction === this.nextDirection) return;
+
+    let tempDirection = this.direction;
+    this.direction = this.nextDirection;
+    this.moveForwards();
+    if (this.map.isCollided(this.x, this.y)) {
+      this.moveBackwards();
+      this.direction = tempDirection;
+    } else {
+      this.moveBackwards();
+    }
+  }
 
   changeAnimation() {
     this.currentFrame =
