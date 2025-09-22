@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 export const canvasContext = canvas.getContext("2d");
-const pacmanFrames = document.getElementById("animation");
+export const pacmanFrames = document.getElementById("animations");
 const ghostFrames = document.getElementById("ghosts");
 
 export const fps = 30;
