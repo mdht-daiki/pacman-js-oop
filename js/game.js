@@ -1,5 +1,7 @@
 import { Map } from "./map.js";
 import { Wall } from "./wall.js";
+import { Food } from "./food.js";
+import { Score } from "./score.js";
 import { fps, mapData, oneBlockSize } from "./variants.js";
 import { Pacman } from "./pacman.js";
 import { createRect } from "./utils.js";
@@ -7,6 +9,8 @@ import { DIRECTION } from "./direction.js";
 
 let map = new Map(mapData);
 let wall = new Wall("#342DCA", 1.5, "black", map);
+let food = new Food("#FEB897", map);
+let score = new Score(map);
 let pacman;
 
 let createNewPacman = () => {
@@ -28,6 +32,7 @@ let gameLoop = () => {
 let update = () => {
   // todo
   pacman.moveProcess();
+  score.add(pacman.eat());
 };
 
 let draw = () => {
@@ -35,6 +40,8 @@ let draw = () => {
   // todo
   wall.draw();
   pacman.draw();
+  food.draw();
+  score.draw();
 };
 
 let gameInterval = setInterval(gameLoop, 1000 / fps);

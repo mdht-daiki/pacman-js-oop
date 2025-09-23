@@ -17,8 +17,19 @@ export class Map {
     return this.data[i][j] === 1;
   }
 
-  isAisle(i, j) {
+  isFood(i, j) {
     return this.data[i][j] === 2;
+  }
+
+  isAisle(i, j) {
+    return this.data[i][j] === 3;
+  }
+
+  updateFoodToAisle(x, y) {
+    let i = parseInt(y / oneBlockSize);
+    let j = parseInt(x / oneBlockSize);
+    if (!this.isFood(i, j)) throw new Error("this is not food section!");
+    this.data[i][j] = 3;
   }
 
   isCollided(x, y) {
@@ -34,6 +45,14 @@ export class Map {
       this.isWall(i2, j2)
     )
       return true;
+    return false;
+  }
+
+  canEat(x, y) {
+    let i = parseInt(y / oneBlockSize);
+    let j = parseInt(x / oneBlockSize);
+
+    if (this.isFood(i, j)) return true;
     return false;
   }
 }

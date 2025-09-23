@@ -32,7 +32,17 @@ export class Pacman {
     }
   }
 
-  eat() {}
+  eat() {
+    if (this.map.canEat(this.x, this.y)) {
+      try {
+        this.map.updateFoodToAisle(this.x, this.y);
+      } catch (e) {
+        console.warn(e.message);
+      }
+      return 1;
+    }
+    return 0;
+  }
 
   moveBackwards() {
     [this.x, this.y] = directionMoveBackwards(
