@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 export const canvasContext = canvas.getContext("2d");
 export const pacmanFrames = document.getElementById("animations");
-const ghostFrames = document.getElementById("ghosts");
+export const ghostFrames = document.getElementById("ghosts");
 
 export const fps = 30;
 export const oneBlockSize = 20;

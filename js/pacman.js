@@ -1,20 +1,10 @@
-import {
-  DIRECTION,
-  moveForwards as directionMoveForwards,
-  moveBackwards as directionMoveBackwards,
-  getRotationRadian,
-} from "./direction.js";
+import { getRotationRadian } from "./direction.js";
 import { canvasContext, pacmanFrames, oneBlockSize } from "./variants.js";
+import { Character } from "./character.js";
 
-export class Pacman {
+export class Pacman extends Character {
   constructor(x, y, width, height, speed, map) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.speed = speed;
-    this.map = map;
-    this.direction = DIRECTION.RIGHT;
+    super(x, y, width, height, speed, map);
     this.nextDirection = this.direction;
     this.currentFrame = 1;
     this.frameCount = 7;
@@ -22,14 +12,6 @@ export class Pacman {
     setInterval(() => {
       this.changeAnimation();
     }, 100);
-  }
-
-  moveProcess() {
-    this.changeDirectionIfPossible();
-    this.moveForwards();
-    if (this.map.isCollided(this.x, this.y)) {
-      this.moveBackwards();
-    }
   }
 
   eat() {
@@ -42,24 +24,6 @@ export class Pacman {
       return 1;
     }
     return 0;
-  }
-
-  moveBackwards() {
-    [this.x, this.y] = directionMoveBackwards(
-      this.x,
-      this.y,
-      this.speed,
-      this.direction
-    );
-  }
-
-  moveForwards() {
-    [this.x, this.y] = directionMoveForwards(
-      this.x,
-      this.y,
-      this.speed,
-      this.direction
-    );
   }
 
   checkGhostCollision() {}
