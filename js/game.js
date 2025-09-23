@@ -43,6 +43,9 @@ let update = () => {
   // todo
   pacman.moveProcess();
   score.add(pacman.eat());
+  for (let i = 0; i < ghosts.length; i++) {
+    ghosts[i].moveProcess(pacman);
+  }
 };
 
 let draw = () => {

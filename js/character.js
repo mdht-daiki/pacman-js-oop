@@ -2,7 +2,6 @@ import {
   DIRECTION,
   moveForwards as directionMoveForwards,
   moveBackwards as directionMoveBackwards,
-  getRotationRadian,
 } from "./direction.js";
 
 export class Character {
