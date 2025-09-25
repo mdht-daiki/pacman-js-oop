@@ -4,6 +4,7 @@ export class Score {
   constructor(map) {
     this.map = map;
     this.score = 0;
+    this.foodCount = map.getFoodCount();
   }
 
   add(num) {
@@ -19,5 +20,12 @@ export class Score {
       0,
       oneBlockSize * (height + 1)
     );
+  }
+
+  isCleared() {
+    if (this.score >= this.foodCount) {
+      return true;
+    }
+    return false;
   }
 }

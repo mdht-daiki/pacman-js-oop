@@ -2,7 +2,7 @@ import { Map } from "./map.js";
 import { Wall } from "./wall.js";
 import { Food } from "./food.js";
 import { Score } from "./score.js";
-import { fps, mapData, oneBlockSize } from "./variants.js";
+import { fps, mapData, oneBlockSize, canvasContext } from "./variants.js";
 import { Pacman } from "./pacman.js";
 import { createRect } from "./utils.js";
 import { DIRECTION } from "./direction.js";
@@ -15,6 +15,7 @@ let score = new Score(map);
 let pacman;
 let ghosts = [];
 let ghostCount = 4;
+let lives = 3;
 
 let ghostLocations = [
   { x: 0, y: 0 },
@@ -35,8 +36,8 @@ let createNewPacman = () => {
 };
 
 let gameLoop = () => {
-  update();
   draw();
+  update();
 };
 
 let update = () => {
@@ -46,13 +47,49 @@ let update = () => {
   for (let i = 0; i < ghosts.length; i++) {
     ghosts[i].moveProcess(pacman);
   }
+
+  if (map.checkHit(pacman, ghosts)) {
+    console.log("hit");
+    restartGame();
+  }
+  if (score.isCleared()) {
+    drawWin();
+    clearInterval(gameInterval);
+  }
+};
+
+let restartGame = () => {
+  createNewPacman();
+  createGhosts();
+  lives--;
+  if (lives === 0) {
+    gameOver();
+  }
+};
+
+let gameOver = () => {
+  drawGameOver();
+  clearInterval(gameInterval);
+};
+
+let drawGameOver = () => {
+  canvasContext.font = "20px Emulogic";
+  canvasContext.fillStyle = "white";
+  canvasContext.fillText("Game Over!", 150, 200);
+};
+
+let drawWin = () => {
+  canvasContext.font = "20px Emulogic";
+  canvasContext.fillStyle = "white";
+  canvasContext.fillText("Winner winner,", 0, 200);
+  canvasContext.fillText("chicken dinner!", 0, 230);
 };
 
 let draw = () => {
   createRect(0, 0, canvas.width, canvas.height, "black");
   // todo
   wall.draw();
-  pacman.draw();
+  pacman.draw(lives);
   food.draw();
   score.draw();
   for (let i = 0; i < ghosts.length; i++) {

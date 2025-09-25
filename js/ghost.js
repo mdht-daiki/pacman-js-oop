@@ -43,7 +43,7 @@ export class Ghost extends Character {
   }
 
   changeRandomDirection() {
-    this.randomTargetIndex += 1;
+    this.randomTargetIndex += parseInt(Math.random() * 4);
     this.randomTargetIndex = this.randomTargetIndex % 4;
   }
 
@@ -180,5 +180,16 @@ export class Ghost extends Character {
       this.height
     );
     canvasContext.restore();
+
+    canvasContext.beginPath();
+    canvasContext.strokeStyle = "red";
+    canvasContext.arc(
+      this.x + oneBlockSize / 2,
+      this.y + oneBlockSize / 2,
+      this.range * oneBlockSize,
+      0,
+      2 * Math.PI
+    );
+    canvasContext.stroke();
   }
 }

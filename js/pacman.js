@@ -26,8 +26,6 @@ export class Pacman extends Character {
     return 0;
   }
 
-  checkGhostCollision() {}
-
   changeDirectionIfPossible() {
     if (this.direction === this.nextDirection) return;
 
@@ -47,7 +45,7 @@ export class Pacman extends Character {
       this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
   }
 
-  draw() {
+  draw(lives) {
     canvasContext.save();
     canvasContext.translate(
       this.x + oneBlockSize / 2,
@@ -71,5 +69,26 @@ export class Pacman extends Character {
     );
 
     canvasContext.restore();
+
+    canvasContext.font = "20px Emulogic";
+    canvasContext.fillStyle = "white";
+    canvasContext.fillText(
+      "Lives: ",
+      220,
+      oneBlockSize * (this.map.getHeight() + 1)
+    );
+    for (let i = 0; i < lives; i++) {
+      canvasContext.drawImage(
+        pacmanFrames,
+        2 * oneBlockSize,
+        0,
+        oneBlockSize,
+        oneBlockSize,
+        350 + i * oneBlockSize,
+        oneBlockSize * this.map.getHeight() + 2,
+        oneBlockSize,
+        oneBlockSize
+      );
+    }
   }
 }

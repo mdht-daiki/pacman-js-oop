@@ -80,4 +80,28 @@ export class Map {
     }
     return false;
   }
+
+  checkHit(pacman, ghosts) {
+    for (let i = 0; i < ghosts.length; i++) {
+      let ghost = ghosts[i];
+      let [ghostY, ghostX] = this.getIndex(ghost.x, ghost.y);
+      let [pacmanY, pacmanX] = this.getIndex(pacman.x, pacman.y);
+      if (ghostX == pacmanX && ghostY == pacmanY) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getFoodCount() {
+    let foodCount = 0;
+    for (let i = 0; i < this.getHeight(); i++) {
+      for (let j = 0; j < this.getWidth(); j++) {
+        if (this.isFood(i, j)) {
+          foodCount++;
+        }
+      }
+    }
+    return foodCount;
+  }
 }
